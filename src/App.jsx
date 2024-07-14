@@ -1,7 +1,7 @@
 export default function App() {
-	return (
-		<>
-			<h1 className=''>Hello</h1>
-		</>
-	)
+  return (
+    <>
+      <h1 className=''>Hello</h1>
+    </>
+  )
 }
