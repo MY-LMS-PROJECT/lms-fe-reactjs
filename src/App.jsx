@@ -1,9 +1,11 @@
+import Container from './components/Container/Container'
+
 export default function App() {
   return (
     <>
-      <div className='container mx-auto'>
+      <Container>
         <h1 className=''>Hello</h1>
-      </div>
+      </Container>
     </>
   )
 }

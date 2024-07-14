@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom'
+import Container from '../../components/Container/Container'
 
 export default function AuthPage() {
   return (
     <>
-      <div className='container mx-auto'>
+      <Container>
         <Outlet />
-      </div>
+      </Container>
     </>
   )
 }
