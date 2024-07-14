@@ -1,7 +1,10 @@
 export default function App() {
   return (
     <>
-      <h1 className=''>Hello</h1>
+      <div className='container mx-auto'>
+        <h1 className=''>Hello</h1>
+      </div>
     </>
   )
 }
+
