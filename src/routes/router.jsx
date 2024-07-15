@@ -3,11 +3,13 @@ import App from '../App'
 import AuthPage from '../pages/auth/AuthPage'
 import LogIn from '../pages/auth/LogIn'
 import SignUp from '../pages/auth/SignUp'
+import LogOut from '@src/pages/auth/LogOut'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    children: [],
   },
   {
     path: '/auth',
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
     ],
+  },
+  {
+    path: '/auth/logout',
+    element: <LogOut />,
   },
 ])
 export default router

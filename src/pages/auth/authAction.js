@@ -2,7 +2,7 @@ import { getProfileApi, logInApi, signUpTeacherApi } from '@src/axios/api'
 import { ACTION_TYPE } from '@src/contexts/stateReducer'
 import { notification } from 'antd'
 
-export const signUpTeacherAction = async ({ values, dispatch, navigate }) => {
+export const signUpTeacherAction = async ({ values, dispatch }) => {
   try {
     const { firstName, lastName, email, password } = values
 
@@ -12,9 +12,8 @@ export const signUpTeacherAction = async ({ values, dispatch, navigate }) => {
 
     notification.success({
       message: 'Đăng ký thành công',
+      placement: 'top',
     })
-
-    navigate('/')
   } catch (error) {
     let errMsg = error.response?.data?.message // string or array
 
@@ -34,7 +33,7 @@ export const signUpTeacherAction = async ({ values, dispatch, navigate }) => {
   }
 }
 
-export const logInAction = async ({ values, dispatch, navigate }) => {
+export const logInAction = async ({ values, dispatch }) => {
   try {
     const { email, password } = values
 
@@ -43,10 +42,9 @@ export const logInAction = async ({ values, dispatch, navigate }) => {
     localStorage.setItem('accessToken', res.metadata.tokens.accessToken)
 
     notification.success({
+      placement: 'top',
       message: 'Đăng nhập thành công',
     })
-
-    // navigate('/')
   } catch (error) {
     let errMsg = error.response?.data?.message // string or array
 
@@ -72,8 +70,15 @@ export const getProfileAction = async ({ dispatch }) => {
     console.log(res)
     dispatch({ type: ACTION_TYPE.LOG_IN, payload: res.metadata.user })
   } catch (error) {
+    localStorage.removeItem('accessToken')
     notification.error({
       message: 'Phiên đăng nhập đã hết hạn',
+      placement: 'top',
     })
   }
+}
+
+export const logOutAction = ({ dispatch }) => {
+  dispatch({ type: ACTION_TYPE.LOG_OUT })
+  localStorage.removeItem('accessToken')
 }
