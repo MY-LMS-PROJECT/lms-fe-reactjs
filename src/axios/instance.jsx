@@ -6,7 +6,7 @@ const axiosCustom = axios.create({
 
 axiosCustom.interceptors.request.use(
   function (config) {
-    // config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
+    config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
     return config
   },
   function (error) {

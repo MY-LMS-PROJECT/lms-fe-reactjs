@@ -1,4 +1,4 @@
-import { logInApi, signUpTeacherApi } from '@src/axios/api'
+import { getProfileApi, logInApi, signUpTeacherApi } from '@src/axios/api'
 import { ACTION_TYPE } from '@src/contexts/stateReducer'
 import { notification } from 'antd'
 
@@ -62,6 +62,18 @@ export const logInAction = async ({ values, dispatch, navigate }) => {
     notification.error({
       message: 'Đăng nhập thất bại',
       description: errMsg,
+    })
+  }
+}
+
+export const getProfileAction = async ({ dispatch }) => {
+  try {
+    const res = await getProfileApi()
+    console.log(res)
+    dispatch({ type: ACTION_TYPE.LOG_IN, payload: res.metadata.user })
+  } catch (error) {
+    notification.error({
+      message: 'Phiên đăng nhập đã hết hạn',
     })
   }
 }

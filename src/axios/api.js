@@ -11,3 +11,8 @@ export const logInApi = async ({ email, password }) => {
   const data = { email, password }
   return await axiosCustom.post(apiUrl, data)
 }
+
+export const getProfileApi = async () => {
+  const apiUrl = '/api/v1/users/profile'
+  return await axiosCustom.get(apiUrl)
+}
