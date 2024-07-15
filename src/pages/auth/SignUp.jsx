@@ -1,23 +1,16 @@
-import { Button, Checkbox, Col, Divider, Form, Input, notification, Row } from 'antd'
+import { Button, Checkbox, Col, Divider, Form, Input, message, notification, Row } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeftOutlined } from '@ant-design/icons'
+import { useStateContext } from '@src/hooks'
+import { logInAction } from './authAction'
 
 export default function SignUp() {
   const navigate = useNavigate()
+  const { state, dispatch } = useStateContext()
+  console.log(state)
 
   const onFinish = async (values) => {
-    // const { name, email, password } = values;
-    // const res = await signupApi({ name, email, password });
-    // if (res) {
-    //   notification.success({ message: "Đăng ký thành công" });
-    //   console.log(res);
-    //   navigate("/login");
-    // } else {
-    //   notification.error({
-    //     message: "Người dùng đã tồn tại",
-    //   });
-    //   console.log(res);
-    // }
+    logInAction({ values, dispatch, navigate })
   }
 
   return (
@@ -34,12 +27,25 @@ export default function SignUp() {
           <legend>Đăng Ký Tài Khoản</legend>
           <Form name='basic' onFinish={onFinish} autoComplete='off' layout='vertical'>
             <Form.Item
-              label='User name'
-              name='name'
+              label='First name'
+              name='firstName'
               rules={[
                 {
                   required: true,
-                  message: 'Please input your name!',
+                  message: 'Please input your first name!',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label='Last name'
+              name='lastName'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input last name!',
                 },
               ]}
             >

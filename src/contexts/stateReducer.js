@@ -2,8 +2,7 @@ export const initState = {
   auth: {
     isAuth: false,
     user: {
-      name: '',
-      email: '',
+      /* firstName, lastName, email, role: { id name description }, avatar, socialId, id, social, createdAt, updatedAt, deletedAt */
     },
   },
 }
@@ -20,10 +19,7 @@ export const reducer = (state, action) => {
         ...state,
         auth: {
           isAuth: true,
-          user: {
-            name: action.payload.name,
-            email: action.payload.email,
-          },
+          user: { ...action.payload },
         },
       }
 
@@ -32,7 +28,7 @@ export const reducer = (state, action) => {
         ...state,
         auth: {
           isAuth: false,
-          user: { name: '', email: '' },
+          user: {},
         },
       }
 

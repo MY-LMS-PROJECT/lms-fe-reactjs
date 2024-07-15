@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom'
 import { Button } from 'antd'
 import canvasLogo from './canvas-logo.svg'
 import { Avatar } from '../Avatar/Avatar'
+import { useStateContext } from '@src/hooks'
 
 export const Header = () => {
+  const { state } = useStateContext()
+
   return (
     <>
       <header className='h flex h-16 items-center justify-between px-16 shadow'>
@@ -16,15 +19,18 @@ export const Header = () => {
           <div>Menu</div>
         </div>
         <div className='flex items-center'>
-          <Avatar />
-          <div className='flex gap-3'>
-            <Link to={'/auth/login'}>
-              <Button>Đăng nhập</Button>
-            </Link>
-            <Link to={'/auth/signup'}>
-              <Button className=''>Đăng ký</Button>
-            </Link>
-          </div>
+          {state.auth.isAuth ? (
+            <Avatar />
+          ) : (
+            <div className='flex gap-3'>
+              <Link to={'/auth/login'}>
+                <Button>Đăng nhập</Button>
+              </Link>
+              <Link to={'/auth/signup'}>
+                <Button className=''>Đăng ký</Button>
+              </Link>
+            </div>
+          )}
         </div>
       </header>
     </>
