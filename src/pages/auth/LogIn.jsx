@@ -1,28 +1,15 @@
-import { Button, Checkbox, Col, Divider, Form, Input, notification, Row } from 'antd'
+import { Button, Checkbox, Col, Divider, Form, Input, Row } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeftOutlined } from '@ant-design/icons'
+import { logInAction } from './authAction'
+import { useStateContext } from '@src/hooks'
 
 export default function LogIn() {
   const navigate = useNavigate()
+  const { dispatch } = useStateContext()
 
   const onFinish = async (values) => {
-    try {
-      // const { email, password } = values
-      // const res = await loginApi({ email, password })
-      // if (res) {
-      //   localStorage.setItem('accessToken', res?.accessToken)
-      //   // setAuth({
-      //   //   isAuthenticated: true,
-      //   //   user: { name: res.user.name, email: res.user.email },
-      //   // })
-      //   notification.success({ message: 'Đăng nhập thành công' })
-      //   navigate('/')
-      // }
-    } catch (error) {
-      notification.error({
-        message: error.response.data.message || 'Email hoặc mật khẩu chưa chính xác',
-      })
-    }
+    logInAction({ values, dispatch, navigate })
   }
 
   return (

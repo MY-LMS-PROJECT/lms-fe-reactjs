@@ -1,8 +1,8 @@
-import { Button, Checkbox, Col, Divider, Form, Input, message, notification, Row } from 'antd'
+import { Button, Checkbox, Col, Divider, Form, Input, Row } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { useStateContext } from '@src/hooks'
-import { logInAction } from './authAction'
+import { signUpTeacherAction } from './authAction'
 
 export default function SignUp() {
   const navigate = useNavigate()
@@ -10,7 +10,7 @@ export default function SignUp() {
   console.log(state)
 
   const onFinish = async (values) => {
-    logInAction({ values, dispatch, navigate })
+    signUpTeacherAction({ values, dispatch, navigate })
   }
 
   return (
