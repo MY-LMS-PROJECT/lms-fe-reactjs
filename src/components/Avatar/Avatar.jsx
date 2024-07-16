@@ -6,30 +6,33 @@ import { Link } from 'react-router-dom'
 export const Avatar = () => {
   const { state } = useStateContext()
   const data = [
-    { key: 'personal', content: 'Cá nhân' },
+    {
+      key: 'profile',
+      href: '#',
+      content: 'Cá nhân',
+    },
     {
       key: 'logout',
-      content: (
-        <Link className='text-black' to='/auth/logout'>
-          Đăng xuất
-        </Link>
-      ),
+      href: '/auth/logout',
+      content: 'Đăng xuất',
     },
   ]
 
   return (
-    <div className='relative'>
-      <AvatarImg className='bg-green-500' icon={<UserOutlined />} />
-      <div className='absolute right-0 top-full pt-3'>
+    <div className='group relative'>
+      <AvatarImg className='bg-green-500' icon={<UserOutlined />} size={'large'} />
+      <div className='absolute right-0 top-full hidden pt-3 group-hover:block'>
         <List
           className='bg-white'
           bordered
           header={<b>{`${state.auth.user.firstName} ${state.auth.user.lastName}`}</b>}
           dataSource={data}
           renderItem={(item) => (
-            <List.Item key={item.key}>
-              <div className='w-36 min-w-36 cursor-pointer'>{item.content}</div>
-            </List.Item>
+            <Link key={item.key} to={item.href} className='overflow-hidden'>
+              <List.Item className='hover:bg-gray-100'>
+                <div className='w-36 min-w-36 cursor-pointer'>{item.content}</div>
+              </List.Item>
+            </Link>
           )}
         />
       </div>

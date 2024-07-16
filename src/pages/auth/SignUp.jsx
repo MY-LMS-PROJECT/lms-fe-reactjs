@@ -2,29 +2,29 @@ import { Button, Checkbox, Col, Divider, Form, Input, Row } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { useStateContext } from '@src/hooks'
-import { signUpTeacherAction } from './authAction'
+import { signUpStudentAction, signUpTeacherAction } from './authAction'
+import { useState } from 'react'
 
 export default function SignUp() {
-  const navigate = useNavigate()
+  const [isSignUpTeacher, setIsSignUpTeacher] = useState(false)
   const { state, dispatch } = useStateContext()
   console.log(state)
 
   const onFinish = async (values) => {
-    signUpTeacherAction({ values, dispatch, navigate })
+    if (isSignUpTeacher) {
+      signUpTeacherAction({ values, dispatch })
+      return
+    }
+    signUpStudentAction({ values, dispatch })
   }
 
   return (
     <Row justify={'center'} style={{ marginTop: '30px' }}>
       <Col xs={24} md={16} lg={8}>
-        <fieldset
-          style={{
-            padding: '15px',
-            margin: '5px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-          }}
-        >
-          <legend>Đăng Ký Tài Khoản</legend>
+        <fieldset className='rounded-md border-gray-50/50 p-4'>
+          <legend className='capitalize'>
+            Đăng ký tài khoản {isSignUpTeacher && 'giảng viên'}
+          </legend>
           <Form name='basic' onFinish={onFinish} autoComplete='off' layout='vertical'>
             <Form.Item
               label='First name'
@@ -92,8 +92,18 @@ export default function SignUp() {
             <ArrowLeftOutlined /> Quay lại trang chủ
           </Link>
           <Divider />
-          <div style={{ textAlign: 'center' }}>
-            Đã có tài khoản? <Link to={'/auth/login'}>Đăng nhập</Link>
+          <div className='flex flex-col gap-3'>
+            <div className='text-center'>
+              Đã có tài khoản? <Link to={'/auth/login'}>Đăng nhập</Link>
+            </div>
+            {!isSignUpTeacher && (
+              <div className='text-center'>
+                Trở thành giảng viên{' '}
+                <Link onClick={() => setIsSignUpTeacher(true)} to={'#'}>
+                  Tại đây.
+                </Link>
+              </div>
+            )}
           </div>
         </fieldset>
       </Col>
