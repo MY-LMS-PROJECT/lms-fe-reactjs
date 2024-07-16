@@ -8,7 +8,7 @@ export const Avatar = () => {
   const data = [
     {
       key: 'profile',
-      href: '#',
+      href: '/profile',
       content: 'Cá nhân',
     },
     {

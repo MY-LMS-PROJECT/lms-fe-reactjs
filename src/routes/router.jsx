@@ -5,13 +5,19 @@ import LogIn from '../pages/auth/LogIn'
 import SignUp from '../pages/auth/SignUp'
 import LogOut from '@src/pages/auth/LogOut'
 import Err404 from '@src/pages/errors/Err404'
+import Profile from '@src/pages/profile/Profile'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     errorElement: <Err404 />,
-    children: [],
+    children: [
+      {
+        path: 'profile',
+        element: <Profile />,
+      },
+    ],
   },
   {
     path: '/auth',

@@ -98,9 +98,13 @@ export const logInAction = async ({ values, dispatch }) => {
 
 export const getProfileAction = async ({ dispatch }) => {
   try {
-    const res = await getProfileApi()
-    console.log(res)
-    dispatch({ type: ACTION_TYPE.LOG_IN, payload: res.metadata.user })
+    const accessToken = localStorage.getItem('accessToken')
+
+    if (accessToken) {
+      const res = await getProfileApi()
+      console.log(res)
+      dispatch({ type: ACTION_TYPE.LOG_IN, payload: res.metadata.user })
+    }
   } catch (error) {
     localStorage.removeItem('accessToken')
     notification.error({
