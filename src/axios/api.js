@@ -22,3 +22,9 @@ export const getProfileApi = async () => {
   const apiUrl = '/api/v1/users/profile'
   return await axiosCustom.get(apiUrl)
 }
+
+export const updateProfile = async ({ firstName, lastName }) => {
+  const apiUrl = '/api/v1/users/profile/update'
+  const data = { firstName, lastName }
+  return await axiosCustom.patch(apiUrl, data)
+}

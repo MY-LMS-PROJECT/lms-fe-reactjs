@@ -1,5 +1,6 @@
+import { updateProfile } from '@src/axios/api'
 import { useStateContext } from '@src/hooks'
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, notification } from 'antd'
 import { useEffect, useState } from 'react'
 
 export default function UserInfo() {
@@ -7,9 +8,29 @@ export default function UserInfo() {
   const user = state?.auth?.user
   const [email] = useState(user?.email)
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     delete values['email']
-    console.log('Success:', values)
+
+    try {
+      await updateProfile(values)
+      location.reload()
+    } catch (error) {
+      let errMsg = error.response?.data?.message // string or array
+
+      if (Array.isArray(errMsg) && errMsg.length > 0) {
+        // errMsg = [{ field: '', error: '' }]
+        console.log('message arr', errMsg)
+        let _errMsg = errMsg.reduce((preValue, currentValue) => {
+          return preValue + `${currentValue.field}: ${currentValue.error}, `
+        }, '')
+        errMsg = _errMsg
+      }
+
+      notification.error({
+        message: 'Cập nhật thất bại',
+        description: errMsg,
+      })
+    }
   }
 
   return (
