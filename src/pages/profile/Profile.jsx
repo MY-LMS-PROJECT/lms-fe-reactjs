@@ -1,27 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import imgAvatar from './200_200.png'
 import { useStateContext } from '@src/hooks'
-import { getProfileAction } from '../auth/authAction'
 import { Divider, Menu } from 'antd'
-import { Navigate } from 'react-router-dom'
-import { CameraFilled, CameraOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons'
+import { CameraFilled, UserOutlined } from '@ant-design/icons'
+import Err403 from '../errors/Err403'
+import UserInfo from './UserInfo'
 
 export default function Profile() {
   const { state, dispatch } = useStateContext()
-  const [currentMenu, setCurrentMenu] = useState('mail')
+  const [currentMenu, setCurrentMenu] = useState('userinfo')
 
   const user = state?.auth?.user
 
   const items = [
     {
-      label: 'Navigation One',
-      key: 'mail',
-      icon: <MailOutlined />,
+      label: 'Thông tin cá nhân',
+      key: 'userinfo',
+      icon: <UserOutlined />,
+    },
+  ]
+
+  const pages = [
+    {
+      key: 'userinfo',
+      content: <UserInfo />,
     },
     {
-      label: 'Navigation One',
-      key: 'mail2',
-      icon: <MailOutlined />,
+      key: 'otherpage',
+      content: 'Other info',
     },
   ]
 
@@ -29,7 +35,7 @@ export default function Profile() {
     setCurrentMenu(e.key)
   }
 
-  if (!state?.auth?.isAuth) return <Navigate to={'/auth/login'} />
+  if (!state?.auth?.isAuth) return <Err403 />
 
   return (
     <div>
@@ -37,7 +43,7 @@ export default function Profile() {
         <div className='relative'>
           <img
             className='size-28 rounded-full p-1 ring-2 ring-gray-300 dark:ring-gray-500'
-            src={user?.avatar ?? imgAvatar}
+            src={user?.avatar ? `http://localhost:8000/public/avatar/${user?.avatar}` : imgAvatar}
             alt='avatar'
           />
           <div className='absolute bottom-0 right-0'>
@@ -46,13 +52,18 @@ export default function Profile() {
         </div>
         <div className=''>
           <h2>{`${user?.firstName} ${user?.lastName}`}</h2>
-          <p>a b c d e</p>
+          <p>Mô tả cá nhân</p>
         </div>
       </div>
       <Divider />
       <Menu onClick={onClick} selectedKeys={[currentMenu]} mode='horizontal' items={items} />
-      <div>1</div>
-      <div>2</div>
+      <div className='mt-8'>
+        {Array.isArray(pages) &&
+          pages.length > 0 &&
+          pages.map((page) => {
+            if (page.key === currentMenu) return <div key={page.key}>{page.content}</div>
+          })}
+      </div>
     </div>
   )
 }
