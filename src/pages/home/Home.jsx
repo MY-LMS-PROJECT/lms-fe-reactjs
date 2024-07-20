@@ -1,18 +1,34 @@
 import { getListCourses } from '@src/axios/api'
-import { Col, Row } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { getImgCourseServer } from '@src/utils/showImgServer'
 
-const style = {
-  background: '#0092ff',
-  padding: '8px 0',
+function CourseCard({ courseTitle, courseTeacher, img }) {
+  return (
+    <Link to={'#'}>
+      <div className='p-5, shadow-course-card w-full hover:opacity-80'>
+        <div>
+          <img className='w-full' src={getImgCourseServer(img)} alt='img course' />
+        </div>
+        <div className='px-5 pb-3'>
+          <h3>{courseTitle}</h3>
+          <p className='text-gray-500'>{courseTeacher}</p>
+        </div>
+      </div>
+    </Link>
+  )
 }
 
 export default function Home() {
+  const [courses, setCourses] = useState([])
+
   useEffect(() => {
     const a = async () => {
       try {
         const res = await getListCourses()
-        console.log(res)
+        setCourses((pre) => {
+          return [...pre, ...(res?.metadata?.courses ?? [])]
+        })
       } catch (error) {
         console.log(error)
       }
@@ -21,19 +37,48 @@ export default function Home() {
   }, [])
 
   return (
-    <Row gutter={16}>
-      <Col className='gutter-row' span={6}>
-        <div style={style}>col-6</div>
-      </Col>
-      <Col className='gutter-row' span={6}>
-        <div style={style}>col-6</div>
-      </Col>
-      <Col className='gutter-row' span={6}>
-        <div style={style}>col-6</div>
-      </Col>
-      <Col className='gutter-row' span={6}>
-        <div style={style}>col-6</div>
-      </Col>
-    </Row>
+    <>
+      <>
+        <div className='flex items-center justify-between'>
+          <h2 className='underline'>Bắt đầu học</h2>
+          <Link to={'#'} className='cursor-pointer'>
+            Tất cả
+          </Link>
+        </div>
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5'>
+          {Array.isArray(courses) &&
+            courses.length > 0 &&
+            courses.slice(0, 10).map((course) => {
+              return (
+                <div className='col-span-1' key={Math.random()}>
+                  <CourseCard
+                    img={course.image}
+                    courseTitle={course.title}
+                    courseTeacher={`${course?.teacher?.firstName} ${course?.teacher?.lastName}`}
+                  />
+                </div>
+              )
+            })}
+        </div>
+      </>
+      <div className='pt-5'>
+        <h2 className='underline'>Lớp học có thể đăng ký</h2>
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5'>
+          {Array.isArray(courses) &&
+            courses.length > 0 &&
+            courses.map((course) => {
+              return (
+                <div className='col-span-1' key={Math.random()}>
+                  <CourseCard
+                    img={course.image}
+                    courseTitle={course.title}
+                    courseTeacher={`${course?.teacher?.firstName} ${course?.teacher?.lastName}`}
+                  />
+                </div>
+              )
+            })}
+        </div>
+      </div>
+    </>
   )
 }

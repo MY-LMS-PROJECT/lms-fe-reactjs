@@ -1,5 +1,6 @@
 import { UserOutlined } from '@ant-design/icons'
 import { useStateContext } from '@src/hooks'
+import { getAvatarServer } from '@src/utils/showImgServer'
 import { Avatar as AvatarImg, List } from 'antd'
 import { Link } from 'react-router-dom'
 
@@ -20,7 +21,12 @@ export const Avatar = () => {
 
   return (
     <div className='group relative'>
-      <AvatarImg className='bg-green-500' icon={<UserOutlined />} size={'large'} />
+      <AvatarImg
+        src={getAvatarServer(state?.auth?.user?.avatar)}
+        className='bg-green-500'
+        icon={<UserOutlined />}
+        size={'large'}
+      />
       <div className='absolute right-0 top-full z-10 hidden pt-3 group-hover:block'>
         <List
           className='bg-white'

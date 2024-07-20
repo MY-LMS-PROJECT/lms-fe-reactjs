@@ -9,7 +9,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className='h flex h-16 items-center justify-between px-16 shadow'>
+      <header className='fixed left-0 right-0 top-0 z-20 flex h-16 items-center justify-between bg-white px-16 shadow'>
         <div className='flex items-center gap-3'>
           <div className='h-7'>
             <Link to={'/'}>
