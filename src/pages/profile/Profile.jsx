@@ -5,6 +5,7 @@ import { Divider, Menu } from 'antd'
 import { CameraFilled, UserOutlined } from '@ant-design/icons'
 import Err403 from '../errors/Err403'
 import UserInfo from './UserInfo'
+import { BACKEND_URL } from '@src/utils/const'
 
 export default function Profile() {
   const { state, dispatch } = useStateContext()
@@ -43,7 +44,7 @@ export default function Profile() {
         <div className='relative'>
           <img
             className='size-28 rounded-full p-1 ring-2 ring-gray-300 dark:ring-gray-500'
-            src={user?.avatar ? `http://localhost:8000/public/avatar/${user?.avatar}` : imgAvatar}
+            src={user?.avatar ? `${BACKEND_URL}/public/avatar/${user?.avatar}` : imgAvatar}
             alt='avatar'
           />
           <div className='absolute bottom-0 right-0'>

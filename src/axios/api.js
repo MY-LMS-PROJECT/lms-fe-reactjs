@@ -28,3 +28,8 @@ export const updateProfile = async ({ firstName, lastName }) => {
   const data = { firstName, lastName }
   return await axiosCustom.patch(apiUrl, data)
 }
+
+export const getListCourses = async ({ page = 1, limit = 10 } = {}) => {
+  const apiUrl = `/api/v1/courses/find?page=${page}&limit=${limit}`
+  return await axiosCustom.get(apiUrl)
+}

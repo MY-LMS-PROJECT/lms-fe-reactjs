@@ -6,6 +6,7 @@ import SignUp from '../pages/auth/SignUp'
 import LogOut from '@src/pages/auth/LogOut'
 import Err404 from '@src/pages/errors/Err404'
 import Profile from '@src/pages/profile/Profile'
+import Home from '@src/pages/home/Home'
 
 const router = createBrowserRouter([
   {
@@ -13,28 +14,17 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <Err404 />,
     children: [
-      {
-        path: 'profile',
-        element: <Profile />,
-      },
+      { path: '/', element: <Home /> },
+      { path: 'profile', element: <Profile /> },
     ],
   },
   {
     path: '/auth',
     element: <AuthPage />,
     children: [
-      {
-        index: true,
-        element: <Navigate to={'login'} />,
-      },
-      {
-        path: 'login',
-        element: <LogIn />,
-      },
-      {
-        path: 'signup',
-        element: <SignUp />,
-      },
+      { index: true, element: <Navigate to={'login'} /> },
+      { path: 'login', element: <LogIn /> },
+      { path: 'signup', element: <SignUp /> },
     ],
   },
   {

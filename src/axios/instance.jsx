@@ -1,7 +1,8 @@
+import { BACKEND_URL } from '@src/utils/const'
 import axios from 'axios'
 
 const axiosCustom = axios.create({
-  baseURL: `${import.meta.env.VITE_BACKEND_URL}`,
+  baseURL: `${BACKEND_URL}`,
 })
 
 axiosCustom.interceptors.request.use(
