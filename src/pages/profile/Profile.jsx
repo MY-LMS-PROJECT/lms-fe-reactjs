@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import imgAvatar from './200_200.png'
 import { useStateContext } from '@src/hooks'
-import { Divider, Menu } from 'antd'
+import { Divider, Menu, notification } from 'antd'
 import { CameraFilled, KeyOutlined, UserOutlined } from '@ant-design/icons'
 import Err403 from '../errors/Err403'
 import UserInfo from './UserInfo'
@@ -67,14 +67,14 @@ export default function Profile() {
       const formData = new FormData()
       formData.append('avatar', file)
       const res = await changeAvatarApi(formData)
-      console.log(res)
       location.reload()
+      // notification.success({ message: res?.message, placement: 'top' })
     } catch (error) {
-      console.log(error)
+      notification.error({ message: error?.response?.data?.message, placement: 'top' })
     }
   }
-  //
 
+  //
   if (!state?.auth?.isAuth) return <Err403 />
 
   return (

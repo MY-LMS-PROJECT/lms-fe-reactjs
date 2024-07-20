@@ -102,7 +102,6 @@ export const getProfileAction = async ({ dispatch }) => {
 
     if (accessToken) {
       const res = await getProfileApi()
-      console.log(res)
       dispatch({ type: ACTION_TYPE.LOG_IN, payload: res.metadata.user })
     }
   } catch (error) {

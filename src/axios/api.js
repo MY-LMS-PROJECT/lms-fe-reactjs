@@ -1,3 +1,4 @@
+import { data } from 'autoprefixer'
 import axiosCustom from './instance'
 
 export const signUpTeacherApi = async ({ firstName, lastName, email, password }) => {
@@ -45,4 +46,12 @@ export const changePasswordApi = async ({ password, newPassword }) => {
 export const getListCourses = async ({ page = 1, limit = 10 } = {}) => {
   const apiUrl = `/api/v1/courses/find?page=${page}&limit=${limit}`
   return await axiosCustom.get(apiUrl)
+}
+
+export const createCourseApi = async (formData) => {
+  const apiUrl = '/api/v1/courses/create'
+  // const data = { title, description, image, startDate }
+  return await axiosCustom.post(apiUrl, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
 }

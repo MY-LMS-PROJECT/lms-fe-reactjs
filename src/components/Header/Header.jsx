@@ -4,11 +4,23 @@ import canvasLogo from './canvas-logo.svg'
 import { Avatar } from '../Avatar/Avatar'
 import { useStateContext } from '@src/hooks'
 import { MenuOutlined } from '@ant-design/icons'
+import { UserRole } from '@src/utils/UserRole'
 
 export const Header = () => {
   const { state } = useStateContext()
 
+  const roleId = state?.auth?.user?.role?.id
+
   const data = [
+    ...(UserRole.TEACHER === roleId
+      ? [
+          {
+            key: 'create-course',
+            href: '/courses/create',
+            content: 'Tạo lớp học',
+          },
+        ]
+      : []),
     {
       key: 'courses',
       href: '#',

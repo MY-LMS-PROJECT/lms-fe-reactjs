@@ -7,6 +7,7 @@ import LogOut from '@src/pages/auth/LogOut'
 import Err404 from '@src/pages/errors/Err404'
 import Profile from '@src/pages/profile/Profile'
 import Home from '@src/pages/home/Home'
+import CreateCourse from '@src/pages/courses/CreateCourse'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,8 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Home /> },
       { path: 'profile', element: <Profile /> },
+      { path: 'auth/logout', element: <LogOut /> },
+      { path: 'courses/create', element: <CreateCourse /> },
     ],
   },
   {
@@ -26,10 +29,6 @@ const router = createBrowserRouter([
       { path: 'login', element: <LogIn /> },
       { path: 'signup', element: <SignUp /> },
     ],
-  },
-  {
-    path: '/auth/logout',
-    element: <LogOut />,
   },
 ])
 export default router
