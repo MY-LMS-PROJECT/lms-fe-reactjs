@@ -36,6 +36,12 @@ export const changeAvatarApi = async (formData) => {
   })
 }
 
+export const changePasswordApi = async ({ password, newPassword }) => {
+  const data = { password, newPassword }
+  const apiUrl = '/api/v1/users/profile/change-password'
+  return await axiosCustom.patch(apiUrl, data)
+}
+
 export const getListCourses = async ({ page = 1, limit = 10 } = {}) => {
   const apiUrl = `/api/v1/courses/find?page=${page}&limit=${limit}`
   return await axiosCustom.get(apiUrl)

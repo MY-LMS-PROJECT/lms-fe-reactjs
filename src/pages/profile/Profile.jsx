@@ -2,11 +2,12 @@ import { useRef, useState } from 'react'
 import imgAvatar from './200_200.png'
 import { useStateContext } from '@src/hooks'
 import { Divider, Menu } from 'antd'
-import { CameraFilled, UserOutlined } from '@ant-design/icons'
+import { CameraFilled, KeyOutlined, UserOutlined } from '@ant-design/icons'
 import Err403 from '../errors/Err403'
 import UserInfo from './UserInfo'
 import { BACKEND_URL } from '@src/utils/const'
 import { changeAvatarApi } from '@src/axios/api'
+import ChangePassword from './ChangePassword'
 
 export default function Profile() {
   // use custom hook
@@ -24,6 +25,11 @@ export default function Profile() {
       key: 'userinfo',
       icon: <UserOutlined />,
     },
+    {
+      label: 'Đổi mật khẩu',
+      key: 'change-password',
+      icon: <KeyOutlined />,
+    },
   ]
 
   const pages = [
@@ -32,8 +38,8 @@ export default function Profile() {
       content: <UserInfo />,
     },
     {
-      key: 'otherpage',
-      content: 'Other info',
+      key: 'change-password',
+      content: <ChangePassword />,
     },
   ]
 

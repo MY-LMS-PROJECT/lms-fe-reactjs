@@ -49,7 +49,7 @@ export default function UserInfo() {
           },
         ]}
       >
-        <Input placeholder={user.firstName} value={user.firstName} />
+        <Input placeholder={user.firstName} />
       </Form.Item>
 
       <Form.Item
@@ -62,7 +62,7 @@ export default function UserInfo() {
           },
         ]}
       >
-        <Input placeholder={user.lastName} value={user.lastName} />
+        <Input placeholder={user.lastName} />
       </Form.Item>
 
       <Form.Item>
