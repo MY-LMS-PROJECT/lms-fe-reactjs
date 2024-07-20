@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import imgAvatar from './200_200.png'
 import { useStateContext } from '@src/hooks'
 import { Divider, Menu } from 'antd'
@@ -6,10 +6,15 @@ import { CameraFilled, UserOutlined } from '@ant-design/icons'
 import Err403 from '../errors/Err403'
 import UserInfo from './UserInfo'
 import { BACKEND_URL } from '@src/utils/const'
+import { changeAvatarApi } from '@src/axios/api'
 
 export default function Profile() {
+  // use custom hook
   const { state, dispatch } = useStateContext()
+  // state
   const [currentMenu, setCurrentMenu] = useState('userinfo')
+  // ref
+  const avatarInputRef = useRef(null)
 
   const user = state?.auth?.user
 
@@ -36,6 +41,34 @@ export default function Profile() {
     setCurrentMenu(e.key)
   }
 
+  // handle change avatar
+  const handleClickChangeAvatar = () => {
+    avatarInputRef.current.click()
+  }
+
+  const handleChangeAvatar = (e) => {
+    const file = e.target.files[0]
+
+    if (file) {
+      handleSubmitAvatar(file)
+    }
+  }
+
+  const handleSubmitAvatar = async (file) => {
+    console.log(file)
+
+    try {
+      const formData = new FormData()
+      formData.append('avatar', file)
+      const res = await changeAvatarApi(formData)
+      console.log(res)
+      location.reload()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  //
+
   if (!state?.auth?.isAuth) return <Err403 />
 
   return (
@@ -47,7 +80,13 @@ export default function Profile() {
             src={user?.avatar ? `${BACKEND_URL}/public/avatar/${user?.avatar}` : imgAvatar}
             alt='avatar'
           />
-          <div className='absolute bottom-0 right-0'>
+          <div className='absolute bottom-0 right-0' onClick={handleClickChangeAvatar}>
+            <input
+              type='file'
+              className='hidden'
+              ref={avatarInputRef}
+              onChange={handleChangeAvatar}
+            />
             <CameraFilled className='text-3xl' />
           </div>
         </div>

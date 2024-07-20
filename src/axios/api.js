@@ -29,6 +29,13 @@ export const updateProfile = async ({ firstName, lastName }) => {
   return await axiosCustom.patch(apiUrl, data)
 }
 
+export const changeAvatarApi = async (formData) => {
+  const apiUrl = '/api/v1/users/profile/change-avatar'
+  return await axiosCustom.patch(apiUrl, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+}
+
 export const getListCourses = async ({ page = 1, limit = 10 } = {}) => {
   const apiUrl = `/api/v1/courses/find?page=${page}&limit=${limit}`
   return await axiosCustom.get(apiUrl)
