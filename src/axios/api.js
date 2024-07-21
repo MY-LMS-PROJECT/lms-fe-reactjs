@@ -50,8 +50,12 @@ export const getListCourses = async ({ page = 1, limit = 10 } = {}) => {
 
 export const createCourseApi = async (formData) => {
   const apiUrl = '/api/v1/courses/create'
-  // const data = { title, description, image, startDate }
   return await axiosCustom.post(apiUrl, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
+}
+
+export const getCoursesByTeacher = async () => {
+  const apiUrl = '/api/v1/courses/find-course-by-teacher'
+  return await axiosCustom.get(apiUrl)
 }
