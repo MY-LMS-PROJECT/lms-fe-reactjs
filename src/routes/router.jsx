@@ -8,6 +8,8 @@ import Err404 from '@src/pages/errors/Err404'
 import Profile from '@src/pages/profile/Profile'
 import Home from '@src/pages/home/Home'
 import CreateCourse from '@src/pages/courses/CreateCourse'
+import ManageCourse from '@src/pages/courses/ManageCourse'
+import EditCourse from '@src/pages/courses/EditCourse'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,9 @@ const router = createBrowserRouter([
       { path: 'profile', element: <Profile /> },
       { path: 'auth/logout', element: <LogOut /> },
       { path: 'courses/create', element: <CreateCourse /> },
+      { path: 'courses/manage', element: <ManageCourse /> },
+      { path: 'courses/edit/:courseId', element: <EditCourse /> },
+      { path: 'courses/delete/:courseId', element: <EditCourse /> },
     ],
   },
   {

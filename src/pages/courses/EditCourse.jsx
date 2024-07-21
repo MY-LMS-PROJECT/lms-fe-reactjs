@@ -1,8 +1,10 @@
-import { useState } from 'react'
-import { Button, Image, DatePicker, Form, Input, Upload, notification } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { createCourseApi } from '@src/axios/api'
-import { useNavigate } from 'react-router-dom'
+import { getCourseDetailApi, updateCourseApi } from '@src/axios/api'
+import { getImgCourseServer } from '@src/utils/showImgServer'
+import { Button, Form, Image, Input, notification, Upload } from 'antd'
+import { useForm } from 'antd/es/form/Form'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -12,35 +14,29 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error)
   })
 
-export default function CreateCourse() {
+export default function EditCourse() {
   const [previewOpen, setPreviewOpen] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [fileList, setFileList] = useState([])
-  const [datePicker, setDatepicker] = useState()
+  const [courseDetail, setCourseDetail] = useState({})
+  const [initForm] = useForm()
+
+  const params = useParams()
 
   const navigate = useNavigate()
 
-  const onChangeDatePicker = (date) => {
-    setDatepicker(date.$d)
-  }
-  const disabledDatePicker = (current) => {
-    // Không cho phép chọn ngày trước ngày hiện tại
-    const today = new Date()
-    today.setHours(0, 0, 0, 0) // Đặt thời gian về 00:00:00 để so sánh chỉ theo ngày
-    return current && current.toDate() < today
-  }
-
   //   call api khi bấm submit
   const onFinishForm = async (values) => {
-    if (datePicker) values.startDate = datePicker
-    values.image = fileList[0].originFileObj
+    if (fileList.length > 0) values.image = fileList[0].originFileObj
 
     try {
       const formData = new FormData()
       Object.keys(values).forEach((key) => {
         formData.append(key, values[key])
       })
-      const res = await createCourseApi(formData)
+
+      const res = await updateCourseApi({ formData, courseId: courseDetail.id })
+      notification.success({ message: res?.message })
       navigate('/courses/manage')
     } catch (error) {
       let errMsg = error.response?.data?.message // string or array
@@ -53,7 +49,7 @@ export default function CreateCourse() {
       }
 
       notification.error({
-        message: 'Tạo khoá học thất bại',
+        message: 'Chỉnh sửa khoá học thất bại',
         description: errMsg,
       })
     }
@@ -79,22 +75,35 @@ export default function CreateCourse() {
       type='button'
     >
       <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
+      <div className='mt-2'>Upload</div>
     </button>
   )
+
+  // useEffect
+  // call api course detail
+  useEffect(() => {
+    const a = async () => {
+      const res = await getCourseDetailApi({ courseId: params.courseId })
+      const course = res?.metadata?.course
+      setCourseDetail(course)
+      // set init form value
+      initForm.setFieldsValue({ title: course.title, description: course.description })
+    }
+    a()
+  }, [])
 
   return (
     <div className='mt-8 flex justify-center'>
       <div className='w-full md:w-2/3 lg:w-1/2'>
-        <Form name='basic' onFinish={onFinishForm} autoComplete='off' layout='vertical'>
+        <Form
+          name='basic'
+          onFinish={onFinishForm}
+          autoComplete='off'
+          layout='vertical'
+          form={initForm}
+        >
           <Form.Item>
-            <h2>Tạo lớp học mới</h2>
+            <h2>Chỉnh sửa thông tin lớp học</h2>
           </Form.Item>
 
           <Form.Item
@@ -109,6 +118,7 @@ export default function CreateCourse() {
           >
             <Input />
           </Form.Item>
+
           <Form.Item
             label='Mô tả'
             name='description'
@@ -121,9 +131,11 @@ export default function CreateCourse() {
           >
             <Input />
           </Form.Item>
-          <Form.Item label='Chọn ngày bắt đầu'>
-            <DatePicker onChange={onChangeDatePicker} disabledDate={disabledDatePicker} />
-          </Form.Item>
+
+          {/* <Form.Item>
+            <p>{new Date(courseDetail?.startDate).toString()}</p>
+          </Form.Item> */}
+
           <Form.Item label='Chọn ảnh'>
             <Upload
               listType='picture-card'
@@ -148,13 +160,18 @@ export default function CreateCourse() {
               />
             )}
           </Form.Item>
+
+          <Form.Item>
+            <img src={getImgCourseServer(courseDetail.image)} alt='' />
+          </Form.Item>
+
           <Form.Item
             wrapperCol={{
               span: 16,
             }}
           >
             <Button type='primary' htmlType='submit'>
-              Tạo khoá học
+              Chỉnh sửa
             </Button>
           </Form.Item>
         </Form>

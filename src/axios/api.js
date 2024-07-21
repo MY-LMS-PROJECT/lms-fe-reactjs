@@ -59,3 +59,20 @@ export const getCoursesByTeacher = async () => {
   const apiUrl = '/api/v1/courses/find-course-by-teacher'
   return await axiosCustom.get(apiUrl)
 }
+
+export const getCourseDetailApi = async ({ courseId }) => {
+  const apiUrl = `/api/v1/courses/find-one/${courseId}`
+  return await axiosCustom.get(apiUrl)
+}
+
+export const updateCourseApi = async ({ formData, courseId }) => {
+  const apiUrl = `/api/v1/courses/update/${courseId}`
+  return await axiosCustom.patch(apiUrl, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+}
+
+export const deleteCourseApi = async ({ courseId }) => {
+  const apiUrl = `/api/v1/courses/delete/${courseId}`
+  return await axiosCustom.delete(apiUrl)
+}

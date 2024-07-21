@@ -19,8 +19,14 @@ export const Header = () => {
             href: '/courses/create',
             content: 'Tạo lớp học',
           },
+          {
+            key: 'manage-course',
+            href: '/courses/manage',
+            content: 'Quản lý lớp học',
+          },
         ]
       : []),
+
     {
       key: 'courses',
       href: '#',

@@ -1,23 +1,7 @@
 import { getListCourses } from '@src/axios/api'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getImgCourseServer } from '@src/utils/showImgServer'
-
-function CourseCard({ courseTitle, courseTeacher, img }) {
-  return (
-    <Link to={'#'}>
-      <div className='p-5, shadow-course-card w-full hover:opacity-80'>
-        <div>
-          <img className='w-full' src={getImgCourseServer(img)} alt='img course' />
-        </div>
-        <div className='px-5 pb-3'>
-          <h3>{courseTitle}</h3>
-          <p className='text-gray-500'>{courseTeacher}</p>
-        </div>
-      </div>
-    </Link>
-  )
-}
+import CourseCard from '@src/components/CourseCard/CourseCard'
 
 export default function Home() {
   const [courses, setCourses] = useState([])
