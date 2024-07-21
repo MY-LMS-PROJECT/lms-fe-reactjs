@@ -56,6 +56,7 @@ export default function Home() {
                 <div className='col-span-1' key={Math.random()}>
                   <CourseCard
                     img={course.image}
+                    courseId={course.id}
                     courseTitle={course.title}
                     courseTeacher={`${course?.teacher?.firstName} ${course?.teacher?.lastName}`}
                   />

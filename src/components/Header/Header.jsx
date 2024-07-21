@@ -29,7 +29,7 @@ export const Header = () => {
 
     {
       key: 'courses',
-      href: '#',
+      href: '/courses/enrollments',
       content: 'Lớp học',
     },
   ]

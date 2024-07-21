@@ -1,4 +1,3 @@
-import { data } from 'autoprefixer'
 import axiosCustom from './instance'
 
 export const signUpTeacherApi = async ({ firstName, lastName, email, password }) => {
@@ -80,4 +79,9 @@ export const deleteCourseApi = async ({ courseId }) => {
 export const enrollCourseApi = async ({ courseId }) => {
   const apiUrl = `/api/v1/courses/enroll-course/${courseId}`
   return await axiosCustom.post(apiUrl)
+}
+
+export const findCousesEnrolledApi = async () => {
+  const apiUrl = `/api/v1/courses/enrolled`
+  return await axiosCustom.get(apiUrl)
 }

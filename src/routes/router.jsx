@@ -11,6 +11,7 @@ import CreateCourse from '@src/pages/courses/CreateCourse'
 import ManageCourse from '@src/pages/courses/ManageCourse'
 import EditCourse from '@src/pages/courses/EditCourse'
 import OverviewCourse from '@src/pages/courses/OverviewCourse'
+import EnrollmentCourse from '@src/pages/courses/EnrollmentCourse'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: 'courses/edit/:courseId', element: <EditCourse /> },
       { path: 'courses/delete/:courseId', element: <EditCourse /> },
       { path: 'courses/:courseId/overview', element: <OverviewCourse /> },
+      { path: 'courses/enrollments', element: <EnrollmentCourse /> },
     ],
   },
   {
