@@ -40,7 +40,6 @@ export default function CourseCard({
         description: errMsg,
       })
     }
-    console.log(courseId)
   }
 
   const handleCancel = () => {
@@ -48,7 +47,7 @@ export default function CourseCard({
   }
 
   return (
-    <Link to={'#'}>
+    <Link to={`/courses/${courseId}/overview`}>
       <div className='w-full shadow-course-card hover:opacity-80'>
         <div className='flex h-40 items-center overflow-hidden'>
           <img className='w-full' src={getImgCourseServer(img)} alt='img course' />

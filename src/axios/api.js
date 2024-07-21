@@ -76,3 +76,8 @@ export const deleteCourseApi = async ({ courseId }) => {
   const apiUrl = `/api/v1/courses/delete/${courseId}`
   return await axiosCustom.delete(apiUrl)
 }
+
+export const enrollCourseApi = async ({ courseId }) => {
+  const apiUrl = `/api/v1/courses/enroll-course/${courseId}`
+  return await axiosCustom.post(apiUrl)
+}
