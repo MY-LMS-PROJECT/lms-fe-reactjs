@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Button, Image, DatePicker, Form, Input, Upload, notification } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { createCourseApi } from '@src/axios/api'
@@ -16,6 +16,7 @@ export default function CreateCourse() {
   const [previewImage, setPreviewImage] = useState('')
   const [fileList, setFileList] = useState([])
   const [datePicker, setDatepicker] = useState()
+  const [courseImg, setCourseImg] = useState({})
 
   const onChangeDatePicker = (date, dateString) => {
     setDatepicker(date.$d)
@@ -30,22 +31,21 @@ export default function CreateCourse() {
   //   call api khi bấm submit
   const onFinishForm = async (values) => {
     values.startDate = datePicker
-    const { uid, ...file } = fileList[0].originFileObj
+    // const { uid, ...file } = fileList[0].originFileObj
+
     try {
       const formData = new FormData()
+      formData.append('image', fileList[0].originFileObj)
       formData.append('title', values.title)
       formData.append('description', values.description)
       formData.append('startDate', values.startDate)
-      formData.append('image', file)
-      const res = await createCourseApi(values)
+      const res = await createCourseApi(formData)
       console.log(res)
     } catch (error) {
       console.log(error)
       let errMsg = error.response?.data?.message // string or array
 
       if (Array.isArray(errMsg) && errMsg.length > 0) {
-        // errMsg = [{ field: '', error: '' }]
-        // console.log('message arr', errMsg)
         let _errMsg = errMsg.reduce((preValue, currentValue) => {
           return preValue + `${currentValue.field}: ${currentValue.error}, `
         }, '')
@@ -56,6 +56,15 @@ export default function CreateCourse() {
         message: 'Tạo khoá học thất bại',
         description: errMsg,
       })
+    }
+  }
+
+  // handle change avatar
+  const handleChangeCourseImage = (e) => {
+    const file = e.target.files[0]
+
+    if (file) {
+      setCourseImg(file)
     }
   }
 
@@ -148,6 +157,10 @@ export default function CreateCourse() {
               />
             )}
           </Form.Item>
+
+          {/* <Form.Item label='Chọn ảnh'>
+            <Input type='file' onChange={handleChangeCourseImage} />
+          </Form.Item> */}
 
           <Form.Item
             wrapperCol={{
